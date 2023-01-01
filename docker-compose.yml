@@ -1,0 +1,60 @@
+version: '3.8'
+services:
+    php-apache:
+        container_name: ${DOCKER_PREF}-php-apache
+        profiles:
+            - php-only
+            - php-mysql
+            - all
+        build:
+            context: ${PHP_APACHE_BUILD_PATH}
+            dockerfile: Dockerfile-${PHP_DOCKER_VERSION}
+            args:
+                PHP_VERSION: ${PHP_VERSION}
+                PHP_ENABLE_XDEBUG: ${PHP_ENABLE_XDEBUG}
+                TZ: ${WORKSPACE_TIMEZONE}
+        depends_on:
+            - mysql
+        volumes:
+            - ${PROJECTS_PATH}:/var/www/html/
+            - ${PHP_INI_PATH}:/usr/local/etc/php/php.ini
+            - ${SSL_KEYS_PATH}:/etc/ssl/keys
+            - ${SITES_AVAILABLE_PATH}:/etc/apache2/sites-available
+            - ${SITES_ENABLED_PATH}:/etc/apache2/sites-enabled
+            - ${APACHE_LOG_PATH}:/var/log/apache2/
+            - ${XDEBUG_INI_PATH}:/usr/local/etc/php/conf.d/xdebug.ini
+            - ${XDEBUG_ERROR_REPORTING_PATH}:/usr/local/etc/php/conf.d/error_reporting.ini
+        ports:
+            - "${APACHE_PORT}:80"
+            - "${APACHE_SSL_PORT}:443"
+    mysql:
+        container_name: ${DOCKER_PREF}-mysql
+        profiles:
+            - php-mysql
+            - mysql
+            - mysql-only
+            - all
+        image: mysql:${MYSQL_VERSION}
+        volumes:
+            - ${MYSQL_DATA_DIR}:/var/lib/mysql
+            - ${MYSQL_LOG_DIR}:/var/log/mysql/
+            - ${MYSQL_DUMP_DIR}:/dump
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            TZ: ${WORKSPACE_TIMEZONE}
+        ports:
+            - "${MYSQL_PORT}:3306"
+    phpmyadmin:
+        container_name: ${DOCKER_PREF}-phpmyadmin
+        profiles:
+            - php-mysql
+            - mysql
+            - all
+        image: phpmyadmin:${PHPMYADMIN_VERSION}
+        ports:
+            - '${PHPMYADMIN_PORT}:80'
+        environment:
+            PMA_HOST: mysql
+            TZ: ${WORKSPACE_TIMEZONE}
+        depends_on:
+            - mysql

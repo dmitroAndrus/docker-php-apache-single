@@ -1,0 +1,29 @@
+ARG PHP_VERSION
+
+FROM php:5.6-apache
+
+ARG PHP_ENABLE_XDEBUG='off'
+ARG TZ='UTC'
+
+RUN echo "${TZ}" && apt-get update && apt-get upgrade -y && \
+    apt-get install -yq tzdata && \
+    ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata
+
+ENV TZ=$TZ
+
+# Install PHP extensions: mysqli
+RUN docker-php-ext-install mysqli
+
+# Enable Xdebug
+RUN if [ "${PHP_ENABLE_XDEBUG}" = "on" ]; then \
+        pecl install xdebug-2.5.5 && \
+        docker-php-ext-enable xdebug; \
+    else \
+        echo "Skip xdebug support"; \
+    fi
+
+# Enable SSL
+RUN a2enmod rewrite && \
+    a2enmod ssl && \
+    a2enmod socache_shmcb
