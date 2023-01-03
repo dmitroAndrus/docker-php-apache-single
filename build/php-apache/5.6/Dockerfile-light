@@ -1,6 +1,6 @@
 ARG PHP_VERSION
 
-FROM php:5.6-apache
+FROM php:${PHP_VERSION}-apache
 
 ARG PHP_ENABLE_XDEBUG='off'
 ARG TZ='UTC'
