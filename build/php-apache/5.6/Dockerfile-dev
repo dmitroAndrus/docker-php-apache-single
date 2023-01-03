@@ -1,0 +1,41 @@
+ARG PHP_VERSION
+
+FROM php:${PHP_VERSION}-apache
+
+ARG PHP_ENABLE_XDEBUG='off'
+ARG TZ='UTC'
+
+RUN echo "${TZ}" && apt-get update && apt-get upgrade -y && \
+    apt-get install -yq tzdata && \
+    ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata
+
+ENV TZ=$TZ
+
+# Install PHP extensions: mysqli
+RUN docker-php-ext-install mysqli
+
+# Enable Xdebug
+RUN if [ "${PHP_ENABLE_XDEBUG}" = "on" ]; then \
+        pecl install xdebug-2.5.5 && \
+        docker-php-ext-enable xdebug; \
+    else \
+        echo "Skip xdebug support"; \
+    fi
+
+# Enable SSL
+RUN a2enmod rewrite && \
+    a2enmod ssl && \
+    a2enmod socache_shmcb
+
+RUN apt-get update -y && apt-get install -y sendmail libpng-dev zlib1g-dev
+
+RUN docker-php-ext-install mbstring && \
+    docker-php-ext-install zip && \
+    docker-php-ext-install gd
+
+RUN curl -o ioncube.tar.gz http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz \
+    && tar -xvvzf ioncube.tar.gz \
+    && mv ioncube/ioncube_loader_lin_5.6.so `php-config --extension-dir` \
+    && rm -Rf ioncube.tar.gz ioncube \
+    && docker-php-ext-enable ioncube_loader_lin_5.6
