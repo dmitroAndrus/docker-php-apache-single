@@ -110,6 +110,8 @@ docker-compose stop
 
 #### Done
 
+You can access phpMyAdmin by [http://localhost:8051/](http://localhost:8051/).
+
 Now you can add Your projects/websites:
 
 - [How to add HTTP website](how-to-add-website.markdown)

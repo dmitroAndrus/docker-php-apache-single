@@ -1,12 +1,12 @@
 FAQ
 -------
 
-#### I got error "Hardware assisted virtualization and data execution protection must be enabled in the BIOS" {#error-virtualization}
+#### I got error "Hardware assisted virtualization and data execution protection must be enabled in the BIOS"
 
 - Check [Your BIOS settings](https://www.youtube.com/results?search_query=How+to+enable+virtualization+in+bios), maybe virtualization is disabled in it.
 - If it still throws this error - [here is the link with some solutions for Windows](https://stackoverflow.com/questions/39684974/docker-for-windows-error-hardware-assisted-virtualization-and-data-execution-p). 
 
-#### How to reload Apache {#how-to-reload-apache}
+#### How to reload Apache
 
 At command line, make sure You are in the installation directory, run command with such pattern:
 
@@ -20,15 +20,15 @@ For example:
 docker exec -it single-php-apache /etc/init.d/apache2 reload
 ```
 
-#### How to reload PHP, i.e. refresh `php.ini` {#how-to-reload-php}
+#### How to reload PHP, i.e. refresh `php.ini`
 
 You should [reload Apache](#how-to-reload-apache).
 
-#### How to add new website {#how-to-add-website}
+#### How to add new website
 
 Follow [this guide](how-to-add-website.markdown).
 
-#### How to add new HTTPS/SSL website {#how-to-add-ssl-website}
+#### How to add new HTTPS/SSL website
 
 Follow [this guide](how-to-add-ssl-website.markdown).
 
@@ -36,7 +36,7 @@ Follow [this guide](how-to-add-ssl-website.markdown).
 
 Make sure You followed all steps in [this guide](how-to-add-website.markdown).
 
-#### I've made changes to `php.ini`, or other `.ini` files in `php` folder, but there are no changes {#tip-php-ini}
+#### I've made changes to `php.ini`, or other `.ini` files in `php` folder, but there are no changes
 
 Make sure to [reload Apache](#how-to-reload-apache).
 
@@ -54,3 +54,8 @@ Please check [this guide](how-to-connect-to-mysql.markdown).
 
 You've set wrong **user**/**password** combination for **MySQL** connection in Your **PHP** file.
 Please check [this guide](how-to-connect-to-mysql.markdown).
+
+#### How to access phpMyAdmin
+
+In browser input `http://localhost:<your PHPMYADMIN_PORT>/` from [`.env`](env.markdown) file.<br>
+By default it's [http://localhost:8051/](http://localhost:8051/).

@@ -24,7 +24,7 @@ Run in command line command with such pattern:
 openssl req -config <your-website.com>.conf -new -x509 -sha256 -newkey rsa:2048 -nodes -keyout <your-website.com>.key.pem -days <number of days for certificate> -out <your-website.com>.cert.pem
 ```
 
-For example, for **my-website.test**, that will be valid for 365 days, the command will be:
+For example, for **my-website.test**, that will be valid for 365 days (max is 5 years - 1825 days), the command will be:
 
 ```shell script
 openssl req -config my-website.test.conf -new -x509 -sha256 -newkey rsa:2048 -nodes -keyout my-website.test.key.pem -days 365 -out my-website.test.cert.pem

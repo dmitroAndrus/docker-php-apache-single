@@ -178,6 +178,7 @@ The pros are:
 - single `apache/sites-available` directory
 - single `mysql/dump` directory
 - single `ssl/keys` directory
+- same **ports** for the services in all versions
 - don't need to write **ports** for websites at browser, that is a challenge for some CMS
 
 Cons are:
@@ -186,6 +187,8 @@ Cons are:
 - complicated structure
 - complicated project start/stop from command line, at [Docker Desktop](https://www.docker.com/products/docker-desktop/) it's bearable.
 - \<write Your here\>
+
+You can access currently running **phpMyAdmin** by [http://localhost:8051/](http://localhost:8051/).
 
 ### Some useful links
 
