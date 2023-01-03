@@ -96,6 +96,8 @@ At command line, make sure You are in this installation directory, run:
 docker-compose build && docker-compose up -d
 ```
 
+***it may take 3-10 minutes for it to create everything***
+
 Every time You want to start containers of this installation You should open command line, navigate to this installation directory and run:
 
 ```shell script

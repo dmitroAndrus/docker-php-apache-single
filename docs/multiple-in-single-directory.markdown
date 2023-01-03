@@ -91,6 +91,8 @@ At command line, make sure You are in this installation directory, run:
 docker-compose --env-file .env-5.6 build && docker-compose --env-file .env-5.6 up -d
 ```
 
+***it may take 3-10 minutes for it to create everything***
+
 Every time You want to start containers of this installation You should open command line, navigate to this installation directory and run:
 
 ```shell script
@@ -154,6 +156,8 @@ At command line, make sure You are in this installation directory, run:
 ```shell script
 docker-compose --env-file .env-8.2 build && docker-compose --env-file .env-8.2 up -d
 ```
+
+***it may take 3-10 minutes for it to create everything***
 
 Same as for **PHP 5.6**, so start it use:
 
